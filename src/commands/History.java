@@ -70,7 +70,7 @@ public class History implements Command, Serializable {
    * 
    * @param num the number of previous commands that should be printed
    */
-  public void printHistory(int num) {
+  private void printHistory(int num) {
     int size = this.input.size() - num;
     if (size < 0) {
       size = 0;
@@ -90,7 +90,7 @@ public class History implements Command, Serializable {
   /**
    * Responsible for printing the desired command history
    */
-  public void printHistory() {
+  private void printHistory() {
     int index = 0;
     int outputNum = 1;
 
@@ -104,7 +104,7 @@ public class History implements Command, Serializable {
   /**
    * Responsible for checking if the parameter is just a number or not
    */
-  public boolean checkNum(String parameter) {
+  private boolean checkNum(String parameter) {
     try {
       int val = 0;
       val = Integer.parseInt(parameter);

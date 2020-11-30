@@ -66,4 +66,14 @@ public class Directory {
     return this.parentDirectory == null ? this.directoryName
         : this.parentDirectory.getAbsolutePath() + this.directoryName + "/";
   }
+  
+  
+  public void emptySubdirectories() {
+    this.subdirectories.clear();
+  }
+  
+  
+  public void removeSubdirectory(Directory directory) {
+    this.subdirectories.remove(directory.getDirectoryName());
+  }
 }

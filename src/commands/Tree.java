@@ -20,13 +20,13 @@ public class Tree implements Command {
     tree();
   }
   
-  public void tree() {
+  private void tree() {
     System.out.println("\\");
     treeRecursive(this.fileSystem.getRoot(), " ");
   }
   
   
-  public void treeRecursive(Directory currentDirectory, String shift) {
+  private void treeRecursive(Directory currentDirectory, String shift) {
     Stack<Directory> stack = new Stack<Directory>();
     HashMap<String, Directory> subdirectories;
     HashMap<String, File> files;

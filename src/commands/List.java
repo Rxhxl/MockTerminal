@@ -47,7 +47,7 @@ public class List implements Command {
    * 
    * @param path String that is the directory path that is to be printed
    */
-  public void list(String path) {
+  private void list(String path) {
     Directory currentDirectory;
     String[] pathList;
 
@@ -99,7 +99,7 @@ public class List implements Command {
    * 
    * @param path String that is the directory path that is to be printed
    */
-  public void recursiveList(String path) {
+  private void recursiveList(String path) {
     Directory currentDirectory;
     String[] pathList;
     String originalPath = path; 

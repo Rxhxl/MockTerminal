@@ -6,6 +6,7 @@ import commands.Exit;
 import commands.History;
 import commands.MakeDirectory;
 import commands.PrintWorkingDirectory;
+import commands.Remove;
 import commands.Tree;
 import exceptions.WrongNumParamsException;
 
@@ -27,6 +28,8 @@ public class ErrorChecker {
       return checkHistoryForErrors(tokens);
     else if (command instanceof Tree)
       return checkTreeForErrors(tokens);
+    else if (command instanceof Remove)
+      return checkRemoveForErrors(tokens);
     return false;
   }
 
@@ -77,6 +80,13 @@ public class ErrorChecker {
   
   private static boolean checkTreeForErrors(List<String> tokens) throws WrongNumParamsException {
     if (tokens.size() != 1) 
+      throw new WrongNumParamsException();
+    return true;
+  }
+  
+  
+  private static boolean checkRemoveForErrors(List<String> tokens) throws WrongNumParamsException {
+    if (tokens.size() != 2) 
       throw new WrongNumParamsException();
     return true;
   }

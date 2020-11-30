@@ -54,7 +54,7 @@ public class PrintWorkingDirectory implements Command {
    * @return String that is the absolute path of where the user is currently 
    * working in
    */
-  public String printWorkingDirectory() {
+  private String printWorkingDirectory() {
     return this.fileSystem.getCurrentDirectory().getAbsolutePath();
   }
 

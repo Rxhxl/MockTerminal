@@ -23,4 +23,9 @@ public class FileSystem {
   public Directory getRoot() {
     return this.rootDirectory;
   }
+  
+  
+  public void setCurrentDirectory(Directory currentDirectory) {
+    this.currentDirectory = currentDirectory;
+  }
 }

@@ -1,8 +1,10 @@
 package interpreter;
 
 import java.util.List;
+import commands.ChangeDirectory;
 import commands.Exit;
 import commands.MakeDirectory;
+import commands.PrintWorkingDirectory;
 import exceptions.WrongNumParamsException;
 
 public class ErrorChecker {
@@ -15,6 +17,11 @@ public class ErrorChecker {
       return checkMakeDirectoryForErrors(tokens);
     else if (command instanceof commands.List)
       return checkListForErrors(tokens);
+    else if (command instanceof ChangeDirectory)
+      return checkChangeDirectoryForErrors(tokens);
+    else if (command instanceof PrintWorkingDirectory) 
+      return checkPrintWorkingDirectoryForErrors(tokens);
+      
     return false;
   }
 
@@ -38,5 +45,20 @@ public class ErrorChecker {
     if (tokens.size() < 1)
       throw new WrongNumParamsException();
     return true;
+  }
+  
+  
+  private static boolean checkChangeDirectoryForErrors(List<String> tokens) throws WrongNumParamsException {
+    if (tokens.size() > 2) 
+      throw new WrongNumParamsException();
+    return true;
+  }
+  
+  
+  private static boolean checkPrintWorkingDirectoryForErrors(List<String> tokens) throws WrongNumParamsException {
+    if (tokens.size() > 1) {
+      throw new WrongNumParamsException();
+    }
+    return true;    
   }
 }

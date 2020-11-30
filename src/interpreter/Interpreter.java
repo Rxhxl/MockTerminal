@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
+import commands.ChangeDirectory;
 import commands.Exit;
 import commands.MakeDirectory;
+import commands.PrintWorkingDirectory;
 import exceptions.InvalidParamsException;
 import exceptions.WrongNumParamsException;
 import filesystem.FileSystem;
@@ -41,7 +43,12 @@ public class Interpreter {
         MakeDirectory.class.cast(command).run(tokens);
       } else if (command instanceof commands.List && ErrorChecker.checkForErrors(command, tokens)) {
         commands.List.class.cast(command).run(tokens);
-      } else {
+      } else if (command instanceof ChangeDirectory && ErrorChecker.checkForErrors(command, tokens)) {
+        ChangeDirectory.class.cast(command).run(tokens);
+      } else if (command instanceof PrintWorkingDirectory && ErrorChecker.checkForErrors(command, tokens)) {
+        PrintWorkingDirectory.class.cast(command).run(tokens);
+      }
+      else {
         System.out.println("You have entered an invalid command");
       }
     } catch (WrongNumParamsException e) {
@@ -70,5 +77,7 @@ public class Interpreter {
     commands.put("exit", new Exit());
     commands.put("mkdir", new MakeDirectory(this.fileSystem));
     commands.put("ls", new commands.List(this.fileSystem));
+    commands.put("cd", new ChangeDirectory(this.fileSystem));
+    commands.put("pwd", new PrintWorkingDirectory(this.fileSystem));
   }
 }

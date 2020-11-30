@@ -9,6 +9,7 @@ import commands.Exit;
 import commands.History;
 import commands.MakeDirectory;
 import commands.PrintWorkingDirectory;
+import commands.Tree;
 import exceptions.InvalidParamsException;
 import exceptions.WrongNumParamsException;
 import filesystem.FileSystem;
@@ -53,6 +54,8 @@ public class Interpreter {
         PrintWorkingDirectory.class.cast(command).run(tokens);
       } else if (command instanceof History && ErrorChecker.checkForErrors(command, tokens)) {
         History.class.cast(command).run(tokens);
+      } else if (command instanceof Tree && ErrorChecker.checkForErrors(command, tokens)) {
+        Tree.class.cast(command).run(tokens);
       }
       else {
         System.out.println("You have entered an invalid command");
@@ -71,7 +74,7 @@ public class Interpreter {
    * @param userInput String of input that the user has entered
    */
   private void tokenizeUserInput(String userInput) {
-    tokens = Arrays.asList(userInput.split("\\s+"));
+    tokens = Arrays.asList(userInput.trim().split("\\s+"));
   }
 
 
@@ -86,5 +89,6 @@ public class Interpreter {
     commands.put("cd", new ChangeDirectory(this.fileSystem));
     commands.put("pwd", new PrintWorkingDirectory(this.fileSystem));
     commands.put("history", history);
+    commands.put("tree", new Tree(this.fileSystem));
   }
 }

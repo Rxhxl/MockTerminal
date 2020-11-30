@@ -2,6 +2,8 @@ package interpreter;
 
 import java.util.List;
 import commands.ChangeDirectory;
+import commands.Concatenate;
+import commands.Echo;
 import commands.Exit;
 import commands.History;
 import commands.LoadJShell;
@@ -42,6 +44,10 @@ public class ErrorChecker {
       return checkSaveJShellForErrors(tokens);
     else if (command instanceof LoadJShell)
       return checkLoadJShellForErrors(tokens);
+    else if (command instanceof Echo)
+      return checkEchoForErrors(tokens);
+    else if (command instanceof Concatenate)
+      return checkConcatenateForErrors(tokens);
     return false;
   }
 
@@ -127,6 +133,20 @@ public class ErrorChecker {
   
   private static boolean checkLoadJShellForErrors(List<String> tokens) throws WrongNumParamsException {
     if (tokens.size() != 2)
+      throw new WrongNumParamsException();
+    return true;
+  }
+  
+  
+  private static boolean checkEchoForErrors(List<String> tokens) throws WrongNumParamsException {
+    if (tokens.size() < 2)
+      throw new WrongNumParamsException();
+    return true;
+  }
+  
+  
+  private static boolean checkConcatenateForErrors(List<String> tokens) throws WrongNumParamsException {
+    if (tokens.size() < 2) 
       throw new WrongNumParamsException();
     return true;
   }

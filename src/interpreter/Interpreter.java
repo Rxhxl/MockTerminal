@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
 import commands.ChangeDirectory;
+import commands.Concatenate;
+import commands.Echo;
 import commands.Exit;
 import commands.History;
 import commands.LoadJShell;
@@ -74,9 +76,14 @@ public class Interpreter {
         this.fileSystem = (FileSystem)loadedObjects.get(0);
         this.history = (History)loadedObjects.get(1);
         generateCommands();
-      }
+      } else if (command instanceof Echo && ErrorChecker.checkForErrors(command, tokens)) {
+        Echo.class.cast(command).run(tokens);
+      } else if (command instanceof Concatenate && ErrorChecker.checkForErrors(command, tokens)) {
+        Concatenate.class.cast(command).run(tokens);
+      } 
       else {
-        System.out.println("You have entered an invalid command");
+        if (!tokens.get(0).equals(""))
+          System.out.println("You have entered an invalid command");
       }
     } catch (WrongNumParamsException e) {
       ErrorHandler.handleWrongNumParamsException(tokens);
@@ -113,5 +120,7 @@ public class Interpreter {
     commands.put("popd", new Popd(this.fileSystem));
     commands.put("saveJShell", new SaveJShell(this.fileSystem, history));
     commands.put("loadJShell", new LoadJShell());
+    commands.put("echo", new Echo(this.fileSystem));
+    commands.put("cat", new Concatenate(this.fileSystem));
   }
 }

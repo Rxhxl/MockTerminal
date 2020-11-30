@@ -57,9 +57,9 @@ public class Directory implements Serializable {
   }
 
 
-  public void addFile(File file) {
-    if (!this.files.containsKey(file.getFileName())) {
-      this.files.put(file.getFileName(), file);
+  public void addFile(String fileName, File file) {
+    if (!this.files.containsKey(fileName)) {
+      this.files.put(fileName, file);
     }
   }
 

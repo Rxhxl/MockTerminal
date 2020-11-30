@@ -53,7 +53,7 @@ public class ChangeDirectory implements Command {
    * 
    * @param path String of the path desired
    */
-  private void changeDirectory(String path) {
+  public void changeDirectory(String path) {
 
     // Checking if the path given corresponds to the root
     if (path.equals("/")) {

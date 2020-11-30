@@ -8,7 +8,9 @@ import commands.ChangeDirectory;
 import commands.Exit;
 import commands.History;
 import commands.MakeDirectory;
+import commands.Popd;
 import commands.PrintWorkingDirectory;
+import commands.Pushd;
 import commands.Remove;
 import commands.Tree;
 import exceptions.InvalidParamsException;
@@ -59,6 +61,10 @@ public class Interpreter {
         Tree.class.cast(command).run(tokens);
       } else if (command instanceof Remove && ErrorChecker.checkForErrors(command, tokens)) {
         Remove.class.cast(command).run(tokens);
+      } else if (command instanceof Pushd && ErrorChecker.checkForErrors(command, tokens)) {
+        Pushd.class.cast(command).run(tokens);
+      } else if (command instanceof Popd && ErrorChecker.checkForErrors(command, tokens)) {
+        Popd.class.cast(command).run(tokens);
       }
       else {
         System.out.println("You have entered an invalid command");
@@ -94,5 +100,7 @@ public class Interpreter {
     commands.put("history", history);
     commands.put("tree", new Tree(this.fileSystem));
     commands.put("rm", new Remove(this.fileSystem));
+    commands.put("pushd", new Pushd(this.fileSystem));
+    commands.put("popd", new Popd(this.fileSystem));
   }
 }

@@ -28,4 +28,19 @@ public class FileSystem {
   public void setCurrentDirectory(Directory currentDirectory) {
     this.currentDirectory = currentDirectory;
   }
+  
+  
+  public void addToDirectoryStack(String newDirectoryPath) {
+    this.directoryStack.add(newDirectoryPath);
+  }
+  
+  
+  public Stack<String> getDirectoryStack() {
+    return this.directoryStack;
+  }
+  
+  
+  public String popFromDirectoryStack() {
+    return this.directoryStack.pop();
+  }
 }

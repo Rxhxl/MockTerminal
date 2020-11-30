@@ -1,9 +1,11 @@
 package filesystem;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Directory {
+public class Directory implements Serializable {
 
+  private static final long serialVersionUID = 1L;
   private HashMap<String, Directory> subdirectories;
   private HashMap<String, File> files;
   private String directoryName;

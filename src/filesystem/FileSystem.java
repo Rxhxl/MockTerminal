@@ -1,9 +1,11 @@
 package filesystem;
 
+import java.io.Serializable;
 import java.util.Stack;
 
-public class FileSystem {
+public class FileSystem implements Serializable {
 
+  private static final long serialVersionUID = 1L;
   private Directory rootDirectory;
   private Directory currentDirectory;
   private Stack<String> directoryStack;

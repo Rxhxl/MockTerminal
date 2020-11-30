@@ -7,11 +7,13 @@ import java.util.HashMap;
 import commands.ChangeDirectory;
 import commands.Exit;
 import commands.History;
+import commands.LoadJShell;
 import commands.MakeDirectory;
 import commands.Popd;
 import commands.PrintWorkingDirectory;
 import commands.Pushd;
 import commands.Remove;
+import commands.SaveJShell;
 import commands.Tree;
 import exceptions.InvalidParamsException;
 import exceptions.WrongNumParamsException;
@@ -42,7 +44,7 @@ public class Interpreter {
   public void interpret(String userInput) {
     tokenizeUserInput(userInput);
     Object command = commands.get(tokens.get(0));
-    history.addInput(tokens.get(0));
+    history.addInput(userInput);
     
     try {
       if (command instanceof Exit && ErrorChecker.checkForErrors(command, tokens)) {
@@ -65,6 +67,13 @@ public class Interpreter {
         Pushd.class.cast(command).run(tokens);
       } else if (command instanceof Popd && ErrorChecker.checkForErrors(command, tokens)) {
         Popd.class.cast(command).run(tokens);
+      } else if (command instanceof SaveJShell && ErrorChecker.checkForErrors(command, tokens)) {
+        SaveJShell.class.cast(command).run(tokens);
+      } else if (command instanceof LoadJShell && ErrorChecker.checkForErrors(command, tokens)) {
+        ArrayList<Object> loadedObjects = LoadJShell.class.cast(command).load(tokens.get(1));
+        this.fileSystem = (FileSystem)loadedObjects.get(0);
+        this.history = (History)loadedObjects.get(1);
+        generateCommands();
       }
       else {
         System.out.println("You have entered an invalid command");
@@ -102,5 +111,7 @@ public class Interpreter {
     commands.put("rm", new Remove(this.fileSystem));
     commands.put("pushd", new Pushd(this.fileSystem));
     commands.put("popd", new Popd(this.fileSystem));
+    commands.put("saveJShell", new SaveJShell(this.fileSystem, history));
+    commands.put("loadJShell", new LoadJShell());
   }
 }

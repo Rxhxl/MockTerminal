@@ -4,11 +4,13 @@ import java.util.List;
 import commands.ChangeDirectory;
 import commands.Exit;
 import commands.History;
+import commands.LoadJShell;
 import commands.MakeDirectory;
 import commands.Popd;
 import commands.PrintWorkingDirectory;
 import commands.Pushd;
 import commands.Remove;
+import commands.SaveJShell;
 import commands.Tree;
 import exceptions.WrongNumParamsException;
 
@@ -36,6 +38,10 @@ public class ErrorChecker {
       return checkPopdForErrors(tokens);
     else if (command instanceof Pushd)
       return checkPushdForErrors(tokens);
+    else if (command instanceof SaveJShell)
+      return checkSaveJShellForErrors(tokens);
+    else if (command instanceof LoadJShell)
+      return checkLoadJShellForErrors(tokens);
     return false;
   }
 
@@ -106,6 +112,20 @@ public class ErrorChecker {
   
   
   private static boolean checkPushdForErrors(List<String> tokens) throws WrongNumParamsException {
+    if (tokens.size() != 2)
+      throw new WrongNumParamsException();
+    return true;
+  }
+  
+  
+  private static boolean checkSaveJShellForErrors(List<String> tokens) throws WrongNumParamsException {
+    if (tokens.size() != 2)
+      throw new WrongNumParamsException();
+    return true;
+  }
+  
+  
+  private static boolean checkLoadJShellForErrors(List<String> tokens) throws WrongNumParamsException {
     if (tokens.size() != 2)
       throw new WrongNumParamsException();
     return true;

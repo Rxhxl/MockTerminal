@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import commands.ChangeDirectory;
 import commands.Exit;
+import commands.History;
 import commands.MakeDirectory;
 import commands.PrintWorkingDirectory;
 import exceptions.InvalidParamsException;
@@ -17,11 +18,13 @@ public class Interpreter {
   private List<String> tokens;
   private static HashMap<String, Object> commands;
   private FileSystem fileSystem;
+  private History history; // Need history here in order to keep adding to it
 
 
   public Interpreter(FileSystem fileSystem) {
     tokens = new ArrayList<String>();
     this.fileSystem = fileSystem;
+    this.history = new History();
     generateCommands();
   }
 
@@ -35,7 +38,8 @@ public class Interpreter {
   public void interpret(String userInput) {
     tokenizeUserInput(userInput);
     Object command = commands.get(tokens.get(0));
-
+    history.addInput(tokens.get(0));
+    
     try {
       if (command instanceof Exit && ErrorChecker.checkForErrors(command, tokens)) {
         Exit.class.cast(command).run(tokens);
@@ -47,6 +51,8 @@ public class Interpreter {
         ChangeDirectory.class.cast(command).run(tokens);
       } else if (command instanceof PrintWorkingDirectory && ErrorChecker.checkForErrors(command, tokens)) {
         PrintWorkingDirectory.class.cast(command).run(tokens);
+      } else if (command instanceof History && ErrorChecker.checkForErrors(command, tokens)) {
+        History.class.cast(command).run(tokens);
       }
       else {
         System.out.println("You have entered an invalid command");
@@ -79,5 +85,6 @@ public class Interpreter {
     commands.put("ls", new commands.List(this.fileSystem));
     commands.put("cd", new ChangeDirectory(this.fileSystem));
     commands.put("pwd", new PrintWorkingDirectory(this.fileSystem));
+    commands.put("history", history);
   }
 }
